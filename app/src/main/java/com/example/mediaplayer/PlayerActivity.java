@@ -1,11 +1,14 @@
 package com.example.mediaplayer;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.media.MediaMetadataRetriever;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,7 +23,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestOptions;
 
-public class PlayerActivity extends AppCompatActivity {
+public class PlayerActivity extends AppCompatActivity implements MediaPlayer.OnPreparedListener {
 
     Button next,prev,pause;
     TextView songname,artistname,current,totaltext;
@@ -31,6 +34,7 @@ public class PlayerActivity extends AppCompatActivity {
     private MediaPlayer mediaPlayer;
     MediaMetadataRetriever metadataRetriever;
     byte art[];
+    int Duration;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +49,7 @@ public class PlayerActivity extends AppCompatActivity {
         seekBar=findViewById(R.id.seek);
         current=findViewById(R.id.current_time);
         totaltext=findViewById(R.id.total_time);
+
        //
         //
         //
@@ -60,20 +65,18 @@ public class PlayerActivity extends AppCompatActivity {
        setData(position);
         playSong(getApplicationContext());
 
-
-        new Thread(new Runnable() {
+     /*   new Thread(new Runnable() {
             @Override
             public void run() {
                 int currentPosition = 0;
-                while (currentPosition<mediaPlayer.getDuration()) {
+                while (currentPosition<Duration) {
                     try {
-                        Thread.sleep(500);
+
                         currentPosition = mediaPlayer.getCurrentPosition();
-                        seekBar.setMax(mediaPlayer.getDuration());
+                        seekBar.setMax(Duration);
                         seekBar.setProgress(currentPosition);
                         System.out.println(millisToMinutesAndSeconds(seekBar.getMax()));
-
-
+                        Thread.sleep(500);
                     }
                     catch (IllegalStateException e){
                                 try {
@@ -100,8 +103,6 @@ public class PlayerActivity extends AppCompatActivity {
                   //  }
                     //final String totalTime = millisToMinutesAndSeconds(total);//converts it to
                    final String curTime = millisToMinutesAndSeconds(currentPosition);
-
-
                    // musicSeekBar.setSecondaryProgress(getBufferPercentage());
                     runOnUiThread(new Runnable() {
                         @Override
@@ -114,6 +115,24 @@ public class PlayerActivity extends AppCompatActivity {
                 }
             }
         }).start();
+        */
+     new Thread(new Runnable() {
+         @Override
+         public void run() {
+             int currentPosition=0;
+                 while (mediaPlayer!=null&&currentPosition<Duration){
+             try{
+                         Message message=new Message();
+                         currentPosition=mediaPlayer.getCurrentPosition();
+                         message.what=mediaPlayer.getCurrentPosition();
+                         handler.sendMessage(message);
+                         Thread.sleep(1000);
+                 }catch (InterruptedException e){
+                     e.printStackTrace();
+                 }
+             }
+         }
+     }).start();
 
        /* updateseekbar=new Thread(){
             @Override
@@ -134,6 +153,7 @@ public class PlayerActivity extends AppCompatActivity {
         };
         updateseekbar.start();*/
 
+
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -148,6 +168,15 @@ public class PlayerActivity extends AppCompatActivity {
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
             mediaPlayer.seekTo(seekBar.getProgress());
+            }
+        });
+        mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            @Override
+            public void onPrepared(MediaPlayer mp) {
+                    seekBar.setMax(mediaPlayer.getDuration());
+                    Duration=mediaPlayer.getDuration();
+                    totaltext.setText(millisToMinutesAndSeconds(Duration));
+                    mediaPlayer.start();
             }
         });
 
@@ -192,6 +221,15 @@ public class PlayerActivity extends AppCompatActivity {
 
 
     }
+    @SuppressLint("HandlerLeak")
+    private Handler handler=new Handler(){
+        @Override
+        public void handleMessage(Message msg){
+            current.setText(millisToMinutesAndSeconds(msg.what));
+                seekBar.setProgress(msg.what);
+                //totaltext.setText(millisToMinutesAndSeconds(Duration));
+        }
+    };
     private void stopPlaying(){
             if (mediaPlayer!= null) {
                 mediaPlayer.stop();
@@ -201,10 +239,12 @@ public class PlayerActivity extends AppCompatActivity {
     public void playSong(Context context){
         try {
             mediaPlayer=MediaPlayer.create(context, Uri.parse(song.getPath()));
+            Duration=mediaPlayer.getDuration();
         }
         catch (Exception e){
             mediaPlayer.release();
             mediaPlayer=MediaPlayer.create(context, Uri.parse(song.getPath()));
+            Duration=mediaPlayer.getDuration();
         }
 
         mediaPlayer.start();
@@ -242,4 +282,9 @@ public class PlayerActivity extends AppCompatActivity {
         return minutes + ":" + (seconds < 10 ? '0' : "") + seconds;
     }
 
+
+    @Override
+    public void onPrepared(MediaPlayer mp) {
+
+    }
 }
