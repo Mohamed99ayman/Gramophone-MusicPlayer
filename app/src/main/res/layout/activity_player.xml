@@ -33,8 +33,8 @@
             android:layout_height="match_parent"
             android:text="Song Name"
             android:textAlignment="center"
-            android:textSize="25sp"
-            android:layout_marginTop="45dp"
+            android:textSize="20sp"
+            android:layout_marginTop="20dp"
             android:singleLine="true"
             android:textColor="#ffff"
             android:id="@+id/song_name"
@@ -45,11 +45,11 @@
             android:layout_height="match_parent"
             android:text="Artist Name"
             android:textAlignment="center"
-            android:textSize="18sp"
+            android:textSize="17sp"
             android:singleLine="true"
             android:textColor="#ffff"
             android:id="@+id/artist_name"
-            android:layout_marginTop="25dp"
+            android:layout_marginTop="10dp"
             android:layout_weight="6"
             />
         </LinearLayout>
@@ -65,11 +65,28 @@
             android:layout_height="match_parent"
             android:padding="5dp"
             >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:layout_marginLeft="30dp"
+                android:id="@+id/current_time"
+                android:text=""/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="30dp"
+                android:text=""
+                android:id="@+id/total_time" />
             <SeekBar
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/seek"
                 android:layout_alignParentTop="true"
+                android:layout_marginLeft="50dp"
+                android:layout_marginRight="50dp"
                 android:layout_marginTop="30dp"/>
             <Button
                 android:layout_width="60dp"

@@ -30,7 +30,7 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.ViewHolder> im
     MediaMetadataRetriever metaRetriver;
        static Typeface myfont;
        private OnClickListen monclicklisten;
-
+        byte art[];
 
 
     @NonNull
@@ -50,16 +50,11 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.ViewHolder> im
         metaRetriver = new MediaMetadataRetriever();
         try {
             metaRetriver.setDataSource(song.getPath());
+
             Glide
                     .with(context)
-
-                    .load(metaRetriver.getEmbeddedPicture())
-                    .apply(new RequestOptions()
-                            .placeholder(R.drawable.track)
-                            .diskCacheStrategy(DiskCacheStrategy.NONE)
-                            .skipMemoryCache(true)
-                    )
-                    .thumbnail(0.98f)
+                    .load(metaRetriver.getEmbeddedPicture()).thumbnail(0.1f)
+                    .placeholder(R.drawable.music_note_24dp)
                     .transition(new DrawableTransitionOptions()
                             .crossFade()
                     )
@@ -67,7 +62,7 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.ViewHolder> im
             metaRetriver.release();
             return;
         }catch (Exception e){
-            Glide.with(context).load(R.drawable.track).into(viewHolder.mImageView);
+           // Glide.with(context).load(R.drawable.track_1).into(viewHolder.mImageView);
         }
         metaRetriver.release();
 
