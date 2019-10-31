@@ -12,7 +12,6 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import static com.example.mediaplayer.Song.sArtworkUri;
 
 public class DataReading {
     public DataReading(Context context){

@@ -3,11 +3,11 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="3dp"
+    android:padding="2dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <ImageView
-        android:layout_width="55dp"
-        android:layout_height="55dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
 
         android:scaleType="centerCrop"
         android:contentDescription="@string/app_name"
@@ -19,13 +19,16 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:id="@+id/textViewSongTitle"
-        android:textSize="18sp"
+        android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/imageView"
-        android:padding="5dp"
+        android:padding="2dp"
         android:singleLine="true"
         android:ellipsize="marquee"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent"
+        android:textColor="#FFFF"
+        android:textStyle="bold"
+        />
     <TextView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -33,9 +36,10 @@
         android:alpha=".7"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/imageView"
-        android:padding="5dp"
+        android:padding="2dp"
         android:singleLine="true"
         android:ellipsize="marquee"
-        app:layout_constraintTop_toBottomOf="@id/textViewSongTitle"/>
+        app:layout_constraintTop_toBottomOf="@id/textViewSongTitle"
+        android:textColor="#FFFF"/>
 
 </android.support.constraint.ConstraintLayout>

@@ -4,14 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
-
+    tools:context=".MainActivity"
+    android:background="@color/colorPrimaryDark">  x
 
    <android.support.v7.widget.RecyclerView
        android:layout_width="match_parent"
        android:layout_height="match_parent"
        android:id="@+id/recycleview"
        tools:layout_editor_absoluteX="8dp"
-       tools:layout_editor_absoluteY="8dp"></android.support.v7.widget.RecyclerView>
+       tools:layout_editor_absoluteY="8dp"
+       android:background="#242529"></android.support.v7.widget.RecyclerView>
+
+
 
 </android.support.constraint.ConstraintLayout>

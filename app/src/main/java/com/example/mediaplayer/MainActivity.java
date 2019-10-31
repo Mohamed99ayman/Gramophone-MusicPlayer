@@ -1,33 +1,37 @@
 package com.example.mediaplayer;
 import android.Manifest;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.BitmapFactory;
-import android.media.MediaMetadataRetriever;
-import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Toast;
-
-import java.io.File;
+import android.support.v7.widget.SearchView;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 
-public class MainActivity extends AppCompatActivity {
+import Interfaces.OnClickListen;
+
+public class MainActivity extends AppCompatActivity implements OnClickListen {
     private int Storage_Permission_code=1;
     private static final String TAG = "MainActivity";
-    byte[] art;
     private RecyclerView recyclerView;
     private SongAdapter songAdapter;
     private RecyclerView.LayoutManager mmanager;
     private DataReading dataReading;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,8 +90,40 @@ public class MainActivity extends AppCompatActivity {
         ArrayList<Song> songs = dataReading.getAllAudioFromDevice();
         Collections.sort(songs);
         mmanager=new LinearLayoutManager(this);
-        songAdapter = new SongAdapter(this, songs);
+        songAdapter = new SongAdapter(this, songs,this);
         recyclerView.setLayoutManager(mmanager);
         recyclerView.setAdapter(songAdapter);
+        RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
+        ((DividerItemDecoration) itemDecoration).setDrawable(getResources().getDrawable(R.drawable.line_divider));
+        recyclerView.addItemDecoration(itemDecoration);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater=getMenuInflater();
+        inflater.inflate(R.menu.search_menu,menu);
+        MenuItem searchItem=menu.findItem(R.id.action_search);
+        SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+      // SearchView searchView= searchItem.getActionView();
+        searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                songAdapter.getFilter().filter(newText);
+                return false;
+            }
+        });
+        return true;
+    }
+
+    @Override
+    public void onClick(int position) {
+    Intent intent=new Intent(this,PlayerActivity.class).putExtra("index",position);
+    startActivity(intent);
     }
 }

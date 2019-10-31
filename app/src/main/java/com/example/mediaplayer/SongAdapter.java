@@ -1,9 +1,8 @@
 package com.example.mediaplayer;
 
 import android.app.Activity;
-import android.content.ContentUris;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+
+import android.graphics.Typeface;
 import android.media.MediaMetadataRetriever;
 import android.net.Uri;
 import android.support.annotation.NonNull;
@@ -11,6 +10,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -18,20 +19,28 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestOptions;
-import java.io.File;
-import java.util.ArrayList;
 
-public class SongAdapter extends RecyclerView.Adapter<SongAdapter.ViewHolder> {
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
+
+import Interfaces.OnClickListen;
+
+public class SongAdapter extends RecyclerView.Adapter<SongAdapter.ViewHolder> implements Filterable {
     MediaMetadataRetriever metaRetriver;
+       static Typeface myfont;
+       private OnClickListen monclicklisten;
+
 
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View v=LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.adapter_view_layout,viewGroup,false);
-        ViewHolder vh=new ViewHolder(v);
+        ViewHolder vh=new ViewHolder(v,monclicklisten);
         return vh;
     }
+
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
@@ -43,21 +52,24 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.ViewHolder> {
             metaRetriver.setDataSource(song.getPath());
             Glide
                     .with(context)
+
                     .load(metaRetriver.getEmbeddedPicture())
                     .apply(new RequestOptions()
                             .placeholder(R.drawable.track)
                             .diskCacheStrategy(DiskCacheStrategy.NONE)
                             .skipMemoryCache(true)
                     )
-                    .thumbnail(0.5f)
+                    .thumbnail(0.98f)
                     .transition(new DrawableTransitionOptions()
                             .crossFade()
                     )
                     .into(viewHolder.mImageView);
+            metaRetriver.release();
             return;
         }catch (Exception e){
             Glide.with(context).load(R.drawable.track).into(viewHolder.mImageView);
         }
+        metaRetriver.release();
 
     }
     @Override
@@ -65,15 +77,24 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.ViewHolder> {
         return songs.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder{
+    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
     public ImageView mImageView;
     public TextView textview1;
     public TextView textView2;
-        public ViewHolder(@NonNull View itemView) {
+    OnClickListen onClickListen;
+        public ViewHolder(@NonNull View itemView,OnClickListen onClickListen) {
             super(itemView);
             mImageView=itemView.findViewById(R.id.imageView);
             textview1=itemView.findViewById(R.id.textViewSongTitle);
+            textview1.setTypeface(myfont);
             textView2=itemView.findViewById(R.id.textViewArtistName);
+            this.onClickListen=onClickListen;
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+        onClickListen.onClick(getAdapterPosition());
         }
     }
 
@@ -81,13 +102,52 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.ViewHolder> {
 
     Activity context;
     ArrayList<Song>songs;
+   static ArrayList<Song>allSongs;
     private static LayoutInflater inflater=null;
 
-    public SongAdapter(Activity context, ArrayList<Song> song) {
-        this.context = context;
-        this.songs = song;
-        inflater=(LayoutInflater)context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
+    public Song getSong(int position){
+        return allSongs.get(position);
     }
 
+    public SongAdapter(Activity context, ArrayList<Song> song,OnClickListen onClickListen) {
+        this.context = context;
+        this.songs = song;
+        allSongs=new ArrayList<>(song);
+        inflater=(LayoutInflater)context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
+        this.monclicklisten=onClickListen;
+
+    }
+@Override
+    public Filter getFilter(){
+    return filter;
+}
+private Filter  filter=new Filter() {
+    @Override
+    protected FilterResults performFiltering(CharSequence constraint) {
+        List<Song>filteredList=new ArrayList<>();
+        if(constraint==null||constraint.length()==0){
+            filteredList.addAll(allSongs);
+        }else{
+            String filterpattern=constraint.toString().toLowerCase().trim();
+
+            for (Song oneSong:allSongs){
+                if(oneSong.getName().toLowerCase().startsWith(filterpattern)||oneSong.getArtist().toLowerCase().startsWith(filterpattern)){
+                    filteredList.add(oneSong);
+                }
+            }
+
+        }
+        FilterResults filterResults=new FilterResults();
+        filterResults.values=filteredList;
+        return filterResults;
+    }
+
+    @Override
+    protected void publishResults(CharSequence constraint, FilterResults results) {
+    songs.clear();
+    songs.addAll((List)results.values);
+    notifyDataSetChanged();
+    }
+};
 
 }
