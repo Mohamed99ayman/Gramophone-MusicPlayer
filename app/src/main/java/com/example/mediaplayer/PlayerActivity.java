@@ -3,6 +3,7 @@ package com.example.mediaplayer;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.gesture.GestureLibraries;
 import android.graphics.BitmapFactory;
 import android.media.MediaMetadataRetriever;
 import android.media.MediaPlayer;
@@ -44,8 +45,10 @@ public class PlayerActivity extends AppCompatActivity implements MediaPlayer.OnP
         prev=findViewById(R.id.previous);
         imageView=findViewById(R.id.imageplayer);
         pause=findViewById(R.id.pause);
+
         songname=findViewById(R.id.song_name);
         artistname=findViewById(R.id.artist_name);
+
         seekBar=findViewById(R.id.seek);
         current=findViewById(R.id.current_time);
         totaltext=findViewById(R.id.total_time);
@@ -55,13 +58,16 @@ public class PlayerActivity extends AppCompatActivity implements MediaPlayer.OnP
         //
         // next.getBackground().setAlpha(64);
 
+        if(mediaPlayer!=null){
+            mediaPlayer.stop();
+        }
 
         Intent i=getIntent();
-
         Bundle bundle=i.getExtras();
+
         position= bundle.getInt("index");
         stopPlaying();
-        mediaPlayer=new MediaPlayer();
+       // mediaPlayer=new MediaPlayer();
        setData(position);
         playSong(getApplicationContext());
 
@@ -237,7 +243,20 @@ public class PlayerActivity extends AppCompatActivity implements MediaPlayer.OnP
             }
     }
     public void playSong(Context context){
-        try {
+        boolean checl=false;
+        while (!checl){
+            try{
+                mediaPlayer=MediaPlayer.create(context, Uri.parse(song.getPath()));
+                Duration=mediaPlayer.getDuration();
+                checl=true;
+            }catch (Exception e){
+                mediaPlayer.release();
+                mediaPlayer=MediaPlayer.create(context, Uri.parse(song.getPath()));
+                Duration=mediaPlayer.getDuration();
+                Log.d("TTry", "playSong: Not Reading");
+            }
+        }
+      /*  try {
             mediaPlayer=MediaPlayer.create(context, Uri.parse(song.getPath()));
             Duration=mediaPlayer.getDuration();
         }
@@ -245,7 +264,8 @@ public class PlayerActivity extends AppCompatActivity implements MediaPlayer.OnP
             mediaPlayer.release();
             mediaPlayer=MediaPlayer.create(context, Uri.parse(song.getPath()));
             Duration=mediaPlayer.getDuration();
-        }
+            e.printStackTrace();
+        }*/
 
         mediaPlayer.start();
         seekBar.setProgress(0);
@@ -270,7 +290,11 @@ public class PlayerActivity extends AppCompatActivity implements MediaPlayer.OnP
             metadataRetriever= new MediaMetadataRetriever();
             metadataRetriever.setDataSource(song.getPath());
             art=metadataRetriever.getEmbeddedPicture();
-            imageView.setImageBitmap(BitmapFactory.decodeByteArray(art, 0, art.length));
+            Glide.with(getApplicationContext())
+                    .load(BitmapFactory.decodeByteArray(art, 0, art.length))
+                    .thumbnail(0.5f)
+                    .into(imageView);
+           // imageView.setImageBitmap();
         }catch (Exception e){
             Glide.with(this).load(R.drawable.track).into(imageView);
         }
