@@ -44,9 +44,7 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.ViewHolder> im
     Song song= songs.get(i);
     viewHolder.textview1.setText(song.getName());
         viewHolder.textView2.setText(song.getArtist());
-       // metaRetriver = new MediaMetadataRetriever();
         try {
-          //  metaRetriver.setDataSource(song.getPath());
 
             Glide
                     .with(context)
@@ -61,12 +59,9 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.ViewHolder> im
                             .crossFade()
                     )
                     .into(viewHolder.mImageView);
-            //metaRetriver.release();
             return;
         }catch (Exception e){
-           // Glide.with(context).load(R.drawable.track_1).into(viewHolder.mImageView);
         }
-       // metaRetriver.release();
 
     }
     @Override
