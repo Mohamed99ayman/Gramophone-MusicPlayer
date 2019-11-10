@@ -1,4 +1,4 @@
-package com.example.mediaplayer;
+package com.example.mediaplayer.activities;
 
 import android.annotation.SuppressLint;
 import android.content.ContentUris;
@@ -16,14 +16,17 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.example.mediaplayer.notification.NofiticationCenter;
+import com.example.mediaplayer.R;
 
-import static com.example.mediaplayer.SongAdapter.songs;
+import static com.example.mediaplayer.adapters.SongAdapter.songs;
 
 
 public class PlayerActivity extends AppCompatActivity {
+    public static boolean playin;
     SeekBar mSeekBar;
     static MediaPlayer mMediaPlayer;
-    static boolean playin;
+
 
     public int getPosition() {
         return position;
@@ -102,7 +105,7 @@ public class PlayerActivity extends AppCompatActivity {
         return instance;
     }
 
-     void initPlayer(final int position) {
+     public void initPlayer(final int position) {
         playin=true;
         if (mMediaPlayer != null && mMediaPlayer.isPlaying()) {
             mMediaPlayer.reset();
@@ -121,7 +124,7 @@ public class PlayerActivity extends AppCompatActivity {
                     .load(ContentUris.withAppendedId(Uri.parse("content://media/external/audio/albumart"),songs.get(position).getAlbumID()).toString())
                     .thumbnail(0.2f)
                     .centerCrop()
-                    .placeholder(R.drawable.track_1)
+                    .placeholder(R.drawable.track)
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into(imageView);
         }
@@ -174,7 +177,6 @@ public class PlayerActivity extends AppCompatActivity {
             }
         });
 
-
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -193,7 +195,6 @@ public class PlayerActivity extends AppCompatActivity {
             }
         }).start();
     }
-
     @SuppressLint("HandlerLeak")
     private Handler handler = new Handler() {
         @Override
@@ -204,9 +205,7 @@ public class PlayerActivity extends AppCompatActivity {
             curTime.setText(cTime);
         }
     };
-
-
-     void play() {
+     public void play() {
 
         if (mMediaPlayer != null && !mMediaPlayer.isPlaying()) {
             playin=true;
@@ -219,7 +218,7 @@ public class PlayerActivity extends AppCompatActivity {
 
     }
 
-     void pause() {
+     public void pause() {
         if (mMediaPlayer.isPlaying()) {
             playin=false;
             mMediaPlayer.pause();

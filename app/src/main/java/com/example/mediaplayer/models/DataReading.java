@@ -1,16 +1,12 @@
-package com.example.mediaplayer;
-import android.content.ContentUris;
+package com.example.mediaplayer.models;
 import android.content.Context;
 import android.database.Cursor;
-import android.graphics.BitmapFactory;
-import android.media.MediaMetadataRetriever;
 import android.net.Uri;
 import android.provider.MediaStore;
-import android.provider.MediaStore.Audio.Albums;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 
 public class DataReading {
@@ -19,6 +15,15 @@ public class DataReading {
     }
     Context context;
 
+    public HashMap<String, List<Song>> getAlbums() {
+        return albums;
+    }
+
+    public void setAlbums(HashMap<String, List<Song>> albums) {
+        this.albums = albums;
+    }
+
+    HashMap<String, List<Song>>albums=new HashMap<>();
 
 
     public ArrayList<Song> getAllAudioFromDevice() {
@@ -42,10 +47,13 @@ public class DataReading {
                 audioModel.setPath(path);
                 audioModel.setAlbumID(albumID);
                 songs.add(audioModel);
+                if(albums.get(album)==null){
+                    albums.put(album,new ArrayList<Song>());
+                }
+                albums.get(album).add(audioModel);
             }
             c.close();
         }
-
         return songs;
     }
     }

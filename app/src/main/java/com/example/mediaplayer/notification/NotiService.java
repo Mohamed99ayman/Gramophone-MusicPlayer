@@ -1,9 +1,13 @@
-package com.example.mediaplayer;
+package com.example.mediaplayer.notification;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
+
+import com.example.mediaplayer.activities.MainActivity;
+import com.example.mediaplayer.activities.PlayerActivity;
+import com.example.mediaplayer.adapters.SongAdapter;
 
 public class NotiService extends Service {
     public static final String CHANNEL_ID = "ForegroundServiceChannel";
@@ -26,7 +30,7 @@ public class NotiService extends Service {
     }
     private void handleIncomingActions(Intent playbackAction) {
         if (playbackAction == null || playbackAction.getAction() == null) return;
-        int pos=PlayerActivity.getInstance().getPosition();
+        int pos= PlayerActivity.getInstance().getPosition();
 
         String actionString = playbackAction.getAction();
 
@@ -38,7 +42,7 @@ public class NotiService extends Service {
                     PlayerActivity.getInstance().play();
                 }
         } else if (actionString.equalsIgnoreCase("com.mypackage.ACTION_NEXT_MUSIC")) {
-                PlayerActivity.getInstance().initPlayer((pos+1)%SongAdapter.songs.size());
+                PlayerActivity.getInstance().initPlayer((pos+1)% SongAdapter.songs.size());
                 PlayerActivity.getInstance().setPosition(pos+1);
         } else if (actionString.equalsIgnoreCase("com.mypackage.ACTION_PREV_MUSIC")) {
                 if(pos==0)pos=SongAdapter.songs.size()-1;

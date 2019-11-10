@@ -1,12 +1,6 @@
-package com.example.mediaplayer;
+package com.example.mediaplayer.models;
 
-import android.content.Context;
-import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.net.Uri;
-import android.provider.MediaStore;
-
-import java.io.IOException;
 
 public class Song implements Comparable<Song> {
 

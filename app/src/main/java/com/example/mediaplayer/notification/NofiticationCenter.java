@@ -1,4 +1,4 @@
-package com.example.mediaplayer;
+package com.example.mediaplayer.notification;
 
 import android.app.Application;
 import android.app.NotificationChannel;

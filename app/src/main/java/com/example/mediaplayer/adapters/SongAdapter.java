@@ -1,4 +1,4 @@
-package com.example.mediaplayer;
+package com.example.mediaplayer.adapters;
 import android.app.Activity;
 import android.content.ContentUris;
 import android.graphics.Typeface;
@@ -17,6 +17,8 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.mediaplayer.R;
+import com.example.mediaplayer.models.Song;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +31,6 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.ViewHolder> im
        private OnClickListen monclicklisten;
         byte art[];
 
-
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
@@ -37,7 +38,6 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.ViewHolder> im
         ViewHolder vh=new ViewHolder(v,monclicklisten);
         return vh;
     }
-
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
@@ -93,7 +93,7 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.ViewHolder> im
 
 
     Activity context;
-   static ArrayList<Song>songs;
+   public static ArrayList<Song>songs;
     ArrayList<Song>allSongs;
     private static LayoutInflater inflater=null;
 
@@ -101,7 +101,7 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.ViewHolder> im
         return allSongs.get(position);
     }
 
-    public SongAdapter(Activity context, ArrayList<Song> song,OnClickListen onClickListen) {
+        public SongAdapter(Activity context, ArrayList<Song> song,OnClickListen onClickListen) {
         this.context = context;
         this.songs = song;
         allSongs=new ArrayList<>(song);

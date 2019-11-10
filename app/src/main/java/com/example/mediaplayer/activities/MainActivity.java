@@ -1,4 +1,4 @@
-package com.example.mediaplayer;
+package com.example.mediaplayer.activities;
 import android.Manifest;
 import android.app.Notification;
 import android.app.PendingIntent;
@@ -15,12 +15,11 @@ import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -29,39 +28,69 @@ import android.widget.Toast;
 import android.support.v7.widget.SearchView;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
-import Interfaces.OnClickListen;
+import android.support.design.widget.TabLayout;
 
-import static com.example.mediaplayer.NofiticationCenter.channel_1_ID;
-import static com.example.mediaplayer.SongAdapter.songs;
+import com.example.mediaplayer.fragments.AlbumsFragment;
+import com.example.mediaplayer.models.DataReading;
+import com.example.mediaplayer.notification.NotiService;
+import com.example.mediaplayer.R;
+import com.example.mediaplayer.models.Song;
+import com.example.mediaplayer.adapters.SongAdapter;
+import com.example.mediaplayer.fragments.SongsFragment;
+import com.example.mediaplayer.adapters.ViewPagerAdapter;
 
-public class MainActivity extends AppCompatActivity implements OnClickListen {
+import static com.example.mediaplayer.notification.NofiticationCenter.channel_1_ID;
+import static com.example.mediaplayer.adapters.SongAdapter.songs;
+
+public class MainActivity extends AppCompatActivity {
     private int Storage_Permission_code=1;
     private static final String TAG = "MainActivity";
-    private RecyclerView recyclerView;
-    private SongAdapter songAdapter;
-    private RecyclerView.LayoutManager mmanager;
     private DataReading dataReading;
     protected static MainActivity instance;
-    private MediaSessionCompat mediaSession;
+
+     HashMap<String, List<Song> >albums=new HashMap<>();
+     public static  ArrayList<ArrayList<Song>>al=new ArrayList<>();
+
+
     private NotificationManagerCompat notificationManager;
     MediaMetadataRetriever metadataRetriever;
+    private MediaSessionCompat mediaSession;
 
+    private TabLayout tableLayout;
+    private ViewPager viewPager;
+    private ViewPagerAdapter viewPagerAdapter;
 
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        recyclerView=findViewById(R.id.recycleview);
-        recyclerView.setHasFixedSize(true);
 
+
+
+        setContentView(R.layout.activity_main);
+
+        tableLayout=findViewById(R.id.table_Layout);
+        viewPager=findViewById(R.id.view_Pager);
+        viewPagerAdapter=new ViewPagerAdapter(getSupportFragmentManager());
+
+
+        viewPagerAdapter.addFragment(new SongsFragment(),"Songs");
+        viewPagerAdapter.addFragment(new AlbumsFragment(),"Albums");
+
+        viewPager.setAdapter(viewPagerAdapter);
+        tableLayout.setupWithViewPager(viewPager);
+        ActionBar actionBar=getSupportActionBar();
+        actionBar.setElevation(0);
         notificationManager = NotificationManagerCompat.from(this);
 
         mediaSession = new MediaSessionCompat(this, "tag");
         instance=this;
-
 
         if(ContextCompat.checkSelfPermission(MainActivity.this,Manifest.permission.READ_EXTERNAL_STORAGE)==PackageManager.PERMISSION_DENIED){
             requestStoragePermission();
@@ -69,8 +98,8 @@ public class MainActivity extends AppCompatActivity implements OnClickListen {
          Start();
 
         }
-
     }
+
     public static MainActivity getInstance() {
         return instance;
     }
@@ -112,13 +141,21 @@ public class MainActivity extends AppCompatActivity implements OnClickListen {
         dataReading=new DataReading(this);
         ArrayList<Song> songs = dataReading.getAllAudioFromDevice();
         Collections.sort(songs);
-        mmanager=new LinearLayoutManager(this);
-        songAdapter = new SongAdapter(this, songs,this);
-        recyclerView.setLayoutManager(mmanager);
-        recyclerView.setAdapter(songAdapter);
-        //RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
-       // ((DividerItemDecoration) itemDecoration).setDrawable(getResources().getDrawable(R.drawable.line_divider));
-       // recyclerView.addItemDecoration(itemDecoration);
+        SongAdapter.songs=songs;
+        albums=dataReading.getAlbums();
+        shift();
+
+
+    }
+    public void shift(){
+        Iterator it = albums.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry pair = (Map.Entry)it.next();
+            al.add((ArrayList<Song>) pair.getValue());
+            //System.out.println(pair.getKey() + " = " + pair.getValue());
+            it.remove(); // avoids a ConcurrentModificationException
+        }
+
     }
 
     @Override
@@ -136,19 +173,13 @@ public class MainActivity extends AppCompatActivity implements OnClickListen {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                songAdapter.getFilter().filter(newText);
+               SongsFragment.search(newText);
                 return false;
             }
         });
         return true;
     }
 
-    @Override
-    public void onClick(int position) {
-    Intent intent=new Intent(this,PlayerActivity.class).putExtra("index",position);
-    startActivity(intent);
-
-    }
 
     public void sendOnChannel(byte art[],String name,String artist,int position) {
 

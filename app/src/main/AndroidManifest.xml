@@ -7,24 +7,24 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name=".NofiticationCenter"
+        android:name=".notification.NofiticationCenter"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="   Songs"
+        android:label="@string/Gramophone"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".PlayerActivity"
+            android:name=".activities.PlayerActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <service android:name=".NotiService"></service>
+        <service android:name=".notification.NotiService"></service>
 
     </application>
 
