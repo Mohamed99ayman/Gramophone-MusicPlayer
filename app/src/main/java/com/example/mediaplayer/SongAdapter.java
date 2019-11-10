@@ -1,7 +1,6 @@
 package com.example.mediaplayer;
-
 import android.app.Activity;
-
+import android.content.ContentUris;
 import android.graphics.Typeface;
 import android.media.MediaMetadataRetriever;
 import android.net.Uri;
@@ -14,13 +13,11 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestOptions;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,24 +44,29 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.ViewHolder> im
     Song song= songs.get(i);
     viewHolder.textview1.setText(song.getName());
         viewHolder.textView2.setText(song.getArtist());
-        metaRetriver = new MediaMetadataRetriever();
+       // metaRetriver = new MediaMetadataRetriever();
         try {
-            metaRetriver.setDataSource(song.getPath());
+          //  metaRetriver.setDataSource(song.getPath());
 
             Glide
                     .with(context)
-                    .load(metaRetriver.getEmbeddedPicture()).thumbnail(0.1f)
-                    .placeholder(R.drawable.music_note_24dp)
+                    .load(ContentUris.withAppendedId(Uri.parse("content://media/external/audio/albumart"),song.getAlbumID()).toString())
+                    .apply(new RequestOptions()
+                            .placeholder(R.drawable.track_2_min)
+                            .diskCacheStrategy(DiskCacheStrategy.NONE)
+                            .skipMemoryCache(true)
+                    )
+                    .thumbnail(0.1f)
                     .transition(new DrawableTransitionOptions()
                             .crossFade()
                     )
                     .into(viewHolder.mImageView);
-            metaRetriver.release();
+            //metaRetriver.release();
             return;
         }catch (Exception e){
            // Glide.with(context).load(R.drawable.track_1).into(viewHolder.mImageView);
         }
-        metaRetriver.release();
+       // metaRetriver.release();
 
     }
     @Override
@@ -96,8 +98,8 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.ViewHolder> im
 
 
     Activity context;
-    ArrayList<Song>songs;
-   static ArrayList<Song>allSongs;
+   static ArrayList<Song>songs;
+    ArrayList<Song>allSongs;
     private static LayoutInflater inflater=null;
 
     public Song getSong(int position){

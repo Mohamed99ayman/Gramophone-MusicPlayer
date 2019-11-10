@@ -6,27 +6,28 @@
     android:padding="2dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <ImageView
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
 
         android:scaleType="centerCrop"
         android:contentDescription="@string/app_name"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         android:id="@+id/imageView"
+        android:adjustViewBounds="true"
         app:layout_constraintStart_toStartOf="parent"/>
     <TextView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:id="@+id/textViewSongTitle"
-        android:textSize="10sp"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/imageView"
-        android:padding="2dp"
+        android:padding="7dp"
         android:singleLine="true"
         android:ellipsize="marquee"
         app:layout_constraintTop_toTopOf="parent"
-        android:textColor="#FFFF"
+        android:textColor="@color/colorAccent"
         android:textStyle="bold"
         />
     <TextView
@@ -40,6 +41,8 @@
         android:singleLine="true"
         android:ellipsize="marquee"
         app:layout_constraintTop_toBottomOf="@id/textViewSongTitle"
-        android:textColor="#FFFF"/>
+        android:textColor="#707070"
+
+        />
 
 </android.support.constraint.ConstraintLayout>

@@ -12,7 +12,15 @@ public class Song implements Comparable<Song> {
 
 
     private String name ,album, artist,path,AlbumArt;
+    long albumID;
 
+    public long getAlbumID() {
+        return albumID;
+    }
+
+    public void setAlbumID(long albumID) {
+        this.albumID = albumID;
+    }
 
     public int getIm() {
         return im;

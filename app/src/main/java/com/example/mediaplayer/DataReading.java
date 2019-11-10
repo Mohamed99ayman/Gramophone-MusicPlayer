@@ -25,7 +25,7 @@ public class DataReading {
         final ArrayList<Song> songs = new ArrayList<>();
 
         Uri uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
-        String[] projection = {MediaStore.Audio.AudioColumns.DATA,MediaStore.Audio.AudioColumns.TITLE ,MediaStore.Audio.AudioColumns.ALBUM, MediaStore.Audio.ArtistColumns.ARTIST};
+        String[] projection = {MediaStore.Audio.AudioColumns.DATA,MediaStore.Audio.AudioColumns.TITLE ,MediaStore.Audio.AudioColumns.ALBUM, MediaStore.Audio.ArtistColumns.ARTIST,MediaStore.Audio.AudioColumns.ALBUM_ID};
         Cursor c = context.getContentResolver().query(uri, projection, null, null, null);
 
         if (c != null) {
@@ -35,10 +35,12 @@ public class DataReading {
                 String name = c.getString(1);   // Retrieve name.
                 String album = c.getString(2);  // Retrieve album name.
                 String artist = c.getString(3); // Retrieve artist name.
+                Long albumID=c.getLong(4);
                 audioModel.setName(name);
                 audioModel.setAlbum(album);
                 audioModel.setArtist(artist);
                 audioModel.setPath(path);
+                audioModel.setAlbumID(albumID);
                 songs.add(audioModel);
             }
             c.close();
