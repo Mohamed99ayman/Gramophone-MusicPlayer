@@ -3,7 +3,6 @@ package com.example.mediaplayer;
 import android.annotation.SuppressLint;
 import android.content.ContentUris;
 import android.content.Intent;
-import android.graphics.BitmapFactory;
 import android.media.MediaMetadataRetriever;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -113,8 +112,10 @@ public class PlayerActivity extends AppCompatActivity {
         String artist= songs.get(position).getArtist();
         songTitle.setText(name);
         artistname.setText(artist);
+        metadataRetriever = new MediaMetadataRetriever();
+        metadataRetriever.setDataSource(songs.get(position).getPath());
         try {
-
+            art = metadataRetriever.getEmbeddedPicture();
             Glide
                     .with(getApplicationContext())
                     .load(ContentUris.withAppendedId(Uri.parse("content://media/external/audio/albumart"),songs.get(position).getAlbumID()).toString())
@@ -128,7 +129,7 @@ public class PlayerActivity extends AppCompatActivity {
 
             Glide.with(this).load(R.drawable.track).into(imageView);
         }
-        MainActivity.getInstance().sendOnChannel(art,name,artist);
+        MainActivity.getInstance().sendOnChannel(art,name,artist,position);
 
         mMediaPlayer = MediaPlayer.create(getApplicationContext(), Uri.parse(songs.get(position).getPath())); // create and load mediaplayer with song resources
         mMediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
@@ -211,7 +212,7 @@ public class PlayerActivity extends AppCompatActivity {
             playin=true;
             mMediaPlayer.start();
             pause.setBackgroundResource(R.drawable.pause_24dp);
-            MainActivity.getInstance().sendOnChannel(art, songs.get(position).getName(), songs.get(position).getArtist());
+            MainActivity.getInstance().sendOnChannel(art, songs.get(position).getName(), songs.get(position).getArtist(),position);
         } else {
             pause();
         }
@@ -223,7 +224,7 @@ public class PlayerActivity extends AppCompatActivity {
             playin=false;
             mMediaPlayer.pause();
             pause.setBackgroundResource(R.drawable.play_arrow_24dp);
-            MainActivity.getInstance().sendOnChannel(art, songs.get(position).getName(), songs.get(position).getArtist());
+            MainActivity.getInstance().sendOnChannel(art, songs.get(position).getName(), songs.get(position).getArtist(),position);
 
 
         }

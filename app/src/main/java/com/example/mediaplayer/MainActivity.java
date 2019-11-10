@@ -33,6 +33,7 @@ import java.util.Collections;
 import Interfaces.OnClickListen;
 
 import static com.example.mediaplayer.NofiticationCenter.channel_1_ID;
+import static com.example.mediaplayer.SongAdapter.songs;
 
 public class MainActivity extends AppCompatActivity implements OnClickListen {
     private int Storage_Permission_code=1;
@@ -149,19 +150,21 @@ public class MainActivity extends AppCompatActivity implements OnClickListen {
 
     }
 
-    public void sendOnChannel(byte art[],String name,String artist) {
+    public void sendOnChannel(byte art[],String name,String artist,int position) {
 
         Intent activityIntent = new Intent(this, MainActivity.class);
         PendingIntent contentIntent = PendingIntent.getActivity(this,
                 0, activityIntent, 0);
 
         int plaorpa;
-        if(PlayerActivity.getInstance().playin){
-            Log.d(TAG, "sendOnChannel: "+PlayerActivity.playin);
+        if(PlayerActivity.playin){
             plaorpa=R.drawable.pause_24dp;
         }else{
             plaorpa=R.drawable.play_arrow_24dp;
         }
+        metadataRetriever = new MediaMetadataRetriever();
+        metadataRetriever.setDataSource(songs.get(position).getPath());
+        art= metadataRetriever.getEmbeddedPicture();
         Bitmap artwork;
         try {
             artwork=BitmapFactory.decodeByteArray(art,0,art.length);
