@@ -17,6 +17,7 @@
         <activity
             android:name=".activities.PlayerActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
+        <activity android:name=".activities.AlbumActivity"/>
         <activity android:name=".activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

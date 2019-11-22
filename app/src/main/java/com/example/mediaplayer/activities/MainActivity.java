@@ -57,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
      public static  ArrayList<ArrayList<Song>>al=new ArrayList<>();
 
 
+
     private NotificationManagerCompat notificationManager;
     MediaMetadataRetriever metadataRetriever;
     private MediaSessionCompat mediaSession;
@@ -65,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
     private ViewPager viewPager;
     private ViewPagerAdapter viewPagerAdapter;
 
-
+    public static Notification notification;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +88,7 @@ public class MainActivity extends AppCompatActivity {
         tableLayout.setupWithViewPager(viewPager);
         ActionBar actionBar=getSupportActionBar();
         actionBar.setElevation(0);
+
         notificationManager = NotificationManagerCompat.from(this);
 
         mediaSession = new MediaSessionCompat(this, "tag");
@@ -152,7 +154,6 @@ public class MainActivity extends AppCompatActivity {
         while (it.hasNext()) {
             Map.Entry pair = (Map.Entry)it.next();
             al.add((ArrayList<Song>) pair.getValue());
-            //System.out.println(pair.getKey() + " = " + pair.getValue());
             it.remove(); // avoids a ConcurrentModificationException
         }
 
@@ -162,7 +163,9 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater=getMenuInflater();
         inflater.inflate(R.menu.search_menu,menu);
+
         MenuItem searchItem=menu.findItem(R.id.action_search);
+
         SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
         searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -202,7 +205,7 @@ public class MainActivity extends AppCompatActivity {
         }catch (Exception e){
             artwork = BitmapFactory.decodeResource(getResources(), R.drawable.track_2);
         }
-        Notification notification = new NotificationCompat.Builder(this, channel_1_ID)
+         notification = new NotificationCompat.Builder(this, channel_1_ID)
                 .setSmallIcon(R.drawable.music_note_24dp)
                 .setContentTitle(name)
                 .setContentText("Song")
@@ -217,6 +220,7 @@ public class MainActivity extends AppCompatActivity {
                 .setSubText(artist)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .build();
+
 
         notificationManager.notify(1, notification);
     }

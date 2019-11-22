@@ -41,9 +41,9 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.ViewHolder> im
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-    Song song= songs.get(i);
-    viewHolder.textview1.setText(song.getName());
-        viewHolder.textView2.setText(song.getArtist());
+        Song song= songs.get(i);
+        viewHolder.textview1.setText(song.getName());
+            viewHolder.textView2.setText(song.getArtist());
         try {
 
             Glide

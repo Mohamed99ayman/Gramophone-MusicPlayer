@@ -26,8 +26,11 @@ import Interfaces.OnClickListen;
 
 public class AlbumAdapter  extends RecyclerView.Adapter<AlbumAdapter.ViewHolder> implements Filterable {
     private OnClickListen alclicklisten;
+
     ArrayList<ArrayList<Song>>filtered=new ArrayList<>();
+
     private static LayoutInflater inflater=null;
+
     public AlbumAdapter(OnClickListen alclicklisten) {
         this.alclicklisten = alclicklisten;
         inflater=(LayoutInflater) MainActivity.getInstance().getSystemService(MainActivity.getInstance().LAYOUT_INFLATER_SERVICE);
@@ -38,7 +41,7 @@ public class AlbumAdapter  extends RecyclerView.Adapter<AlbumAdapter.ViewHolder>
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
 
         View view=LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.adapter_album_layout,viewGroup,false);
-        return new ViewHolder(view);
+        return new ViewHolder(view,alclicklisten);
 
     }
 
@@ -74,16 +77,22 @@ public class AlbumAdapter  extends RecyclerView.Adapter<AlbumAdapter.ViewHolder>
     }
 
 
-    public static class ViewHolder extends RecyclerView.ViewHolder{
+    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         TextView album,artist;
         ImageView imageView;
-
-        public ViewHolder(@NonNull View itemView) {
+        OnClickListen onClickListen;
+        public ViewHolder(@NonNull View itemView,OnClickListen onClickListen) {
             super(itemView);
             album=itemView.findViewById(R.id.album_name);
             artist=itemView.findViewById(R.id.album_artist);
             imageView=itemView.findViewById(R.id.album_image);
+            this.onClickListen=onClickListen;
+            itemView.setOnClickListener(this);
+        }
 
+        @Override
+        public void onClick(View v) {
+            onClickListen.onClick(getAdapterPosition());
         }
     }
    /* private Filter  filter=new Filter() {

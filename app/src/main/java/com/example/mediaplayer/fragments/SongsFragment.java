@@ -50,7 +50,7 @@ public class SongsFragment extends Fragment implements OnClickListen {
 
     @Override
     public void onClick(int position) {
-        Intent intent=new Intent(MainActivity.getInstance(), PlayerActivity.class).putExtra("index",position);
+        Intent intent=new Intent(MainActivity.getInstance(), PlayerActivity.class).putExtra("index",position).putExtra("val",0);
         startActivity(intent);
     }
     public static void search(String text){

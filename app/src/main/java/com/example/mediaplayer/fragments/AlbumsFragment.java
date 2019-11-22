@@ -12,8 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.mediaplayer.R;
+import com.example.mediaplayer.activities.AlbumActivity;
 import com.example.mediaplayer.activities.MainActivity;
-import com.example.mediaplayer.activities.PlayerActivity;
 import com.example.mediaplayer.adapters.AlbumAdapter;
 
 import Interfaces.OnClickListen;
@@ -52,7 +52,7 @@ public class AlbumsFragment extends Fragment implements OnClickListen {
     }
     @Override
     public void onClick(int position) {
-        Intent intent=new Intent(MainActivity.getInstance(), PlayerActivity.class).putExtra("index",position);
+        Intent intent=new Intent(MainActivity.getInstance(), AlbumActivity.class).putExtra("index",position);
         startActivity(intent);
     }
 

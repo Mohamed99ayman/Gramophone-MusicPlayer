@@ -1,6 +1,7 @@
 package com.example.mediaplayer.activities;
 
 import android.annotation.SuppressLint;
+import android.app.Notification;
 import android.content.ContentUris;
 import android.content.Intent;
 import android.media.MediaMetadataRetriever;
@@ -12,12 +13,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.example.mediaplayer.adapters.SongAdapter;
+import com.example.mediaplayer.adapters.SongAlbumAdapter;
+import com.example.mediaplayer.models.Song;
 import com.example.mediaplayer.notification.NofiticationCenter;
 import com.example.mediaplayer.R;
+
+import java.util.ArrayList;
 
 import static com.example.mediaplayer.adapters.SongAdapter.songs;
 
@@ -28,6 +35,7 @@ public class PlayerActivity extends AppCompatActivity {
     static MediaPlayer mMediaPlayer;
 
 
+
     public int getPosition() {
         return position;
     }
@@ -36,10 +44,21 @@ public class PlayerActivity extends AppCompatActivity {
     TextView curTime,totTime,songTitle,artistname;
     ImageView pause,prev,next;
     ImageView imageView;
+    int val;
+    ArrayList<Song>Asongs;
     MediaMetadataRetriever metadataRetriever;
     byte art[];
     private NofiticationCenter nofiticationCenter;
     private static PlayerActivity instance;
+   /* private Palette.Swatch vibrant;
+    private Palette.Swatch lightvibrant;
+    private Palette.Swatch darkvibrant;
+    private Palette.Swatch muted;
+    private Palette.Swatch lightmuted;
+    private Palette.Swatch darkmuted;
+    private int swatchnum;*/
+    LinearLayout linearLayout;
+
 
 
     public void setPosition(int position) {
@@ -57,7 +76,7 @@ public class PlayerActivity extends AppCompatActivity {
         artistname=findViewById(R.id.artist_name);
         totTime = findViewById(R.id.total_time);
         pause = findViewById(R.id.pause);
-
+        linearLayout=findViewById(R.id.linear_layout);
         prev = findViewById(R.id.previous);
         next = findViewById(R.id.next);
         curTime=findViewById(R.id.current_time);
@@ -69,7 +88,15 @@ public class PlayerActivity extends AppCompatActivity {
         Intent i = getIntent();
         Bundle bundle = i.getExtras();
         position = bundle.getInt("index");
+        val=bundle.getInt("val");
+        if(val==1){
+            Asongs= SongAlbumAdapter.albumSong;
+        }else{
+            Asongs= SongAdapter.songs;
+        }
         initPlayer(position);
+
+
 
         pause.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,7 +109,7 @@ public class PlayerActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 if (position == 0) {
-                    position = songs.size() - 1;
+                    position = Asongs.size() - 1;
                 } else {
                     position--;
                 }
@@ -94,7 +121,7 @@ public class PlayerActivity extends AppCompatActivity {
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                position=(position+1)% songs.size();
+                position=(position+1)% Asongs.size();
                 initPlayer(position);
             }
         });
@@ -111,21 +138,22 @@ public class PlayerActivity extends AppCompatActivity {
             mMediaPlayer.reset();
         }
 
-        String name= songs.get(position).getName();
-        String artist= songs.get(position).getArtist();
+        String name= Asongs.get(position).getName();
+        String artist= Asongs.get(position).getArtist();
         songTitle.setText(name);
         artistname.setText(artist);
-        metadataRetriever = new MediaMetadataRetriever();
-        metadataRetriever.setDataSource(songs.get(position).getPath());
+
         try {
-            art = metadataRetriever.getEmbeddedPicture();
+
             Glide
                     .with(getApplicationContext())
-                    .load(ContentUris.withAppendedId(Uri.parse("content://media/external/audio/albumart"),songs.get(position).getAlbumID()).toString())
+                    .load(ContentUris.withAppendedId(Uri.parse("content://media/external/audio/albumart"),Asongs.get(position).getAlbumID()).toString())
                     .thumbnail(0.2f)
                     .centerCrop()
                     .placeholder(R.drawable.track)
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .skipMemoryCache(true)
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+
                     .into(imageView);
         }
         catch (Exception e){
@@ -134,7 +162,25 @@ public class PlayerActivity extends AppCompatActivity {
         }
         MainActivity.getInstance().sendOnChannel(art,name,artist,position);
 
-        mMediaPlayer = MediaPlayer.create(getApplicationContext(), Uri.parse(songs.get(position).getPath())); // create and load mediaplayer with song resources
+
+        //backgoround color change
+      /*  Bitmap bitmap=((BitmapDrawable)imageView.getDrawable()).getBitmap();
+        Palette.from(bitmap).generate(new Palette.PaletteAsyncListener() {
+            @Override
+            public void onGenerated(@Nullable Palette palette) {
+                vibrant=palette.getVibrantSwatch();
+                darkvibrant=palette.getDarkVibrantSwatch();
+                lightvibrant=palette.getLightVibrantSwatch();
+                muted=palette.getLightMutedSwatch();
+                lightmuted=palette.getLightMutedSwatch();
+                darkmuted=palette.getDarkMutedSwatch();
+
+            }
+        });
+        linearLayout.setBackgroundColor(vibrant.getRgb());
+
+*/
+        mMediaPlayer = MediaPlayer.create(getApplicationContext(), Uri.parse(Asongs.get(position).getPath())); // create and load mediaplayer with song resources
         mMediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override
             public void onPrepared(MediaPlayer mp) {
@@ -151,7 +197,7 @@ public class PlayerActivity extends AppCompatActivity {
             @Override
             public void onCompletion(MediaPlayer mp) {
                 int curSongPoition = position;
-                curSongPoition = (curSongPoition + 1) % (songs.size());
+                curSongPoition = (curSongPoition + 1) % (Asongs.size());
                 initPlayer(curSongPoition);
 
             }
@@ -211,7 +257,7 @@ public class PlayerActivity extends AppCompatActivity {
             playin=true;
             mMediaPlayer.start();
             pause.setBackgroundResource(R.drawable.pause_24dp);
-            MainActivity.getInstance().sendOnChannel(art, songs.get(position).getName(), songs.get(position).getArtist(),position);
+            MainActivity.getInstance().sendOnChannel(art, Asongs.get(position).getName(), Asongs.get(position).getArtist(),position);
         } else {
             pause();
         }
@@ -223,12 +269,13 @@ public class PlayerActivity extends AppCompatActivity {
             playin=false;
             mMediaPlayer.pause();
             pause.setBackgroundResource(R.drawable.play_arrow_24dp);
-            MainActivity.getInstance().sendOnChannel(art, songs.get(position).getName(), songs.get(position).getArtist(),position);
+            MainActivity.getInstance().sendOnChannel(art, Asongs.get(position).getName(), Asongs.get(position).getArtist(),position);
 
 
         }
 
     }
+
 
     public String createTimeLabel(int duration) {
         String timeLabel = "";
