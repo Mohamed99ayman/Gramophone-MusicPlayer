@@ -1,11 +1,11 @@
 # Gramophone-MusicPlayer
 A simple MusicPlayer that allows the user to select songs from their library and play them.
 
-      features
- Supports all music file format.
- Browse and play music by Albums.
- Quick search for a song or artist.
- shuffle all your tracks.
+        features
+      Supports all music file format.
+      Browse and play music by Albums.
+      Quick search for a song or artist.
+      shuffle all your tracks.
  
  
 ![screenshot-from-2019-11-21-12-](https://user-images.githubusercontent.com/44615609/69328929-d0535900-0c58-11ea-8376-31aa340833b0.png)
