@@ -25,11 +25,11 @@ import static com.example.mediaplayer.activities.MainActivity.al;
 public class AlbumActivity extends AppCompatActivity implements OnClickListen {
 
 
-    ImageView imageView;
-    int position;
-    private RecyclerView recyclerView;
-    private RecyclerView.LayoutManager mmanager;
-    private static SongAlbumAdapter songalbumAdapter;
+    protected ImageView imageView;
+    protected int position;
+    protected RecyclerView recyclerView;
+    protected RecyclerView.LayoutManager mmanager;
+    static SongAlbumAdapter songalbumAdapter;
 
 
     @Override

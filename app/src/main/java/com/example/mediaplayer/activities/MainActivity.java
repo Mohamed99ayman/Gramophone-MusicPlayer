@@ -50,21 +50,22 @@ import static com.example.mediaplayer.adapters.SongAdapter.songs;
 public class MainActivity extends AppCompatActivity {
     private int Storage_Permission_code=1;
     private static final String TAG = "MainActivity";
-    private DataReading dataReading;
+     DataReading dataReading;
     protected static MainActivity instance;
+   private byte arts[];
 
-     HashMap<String, List<Song> >albums=new HashMap<>();
+     private HashMap<String, List<Song> >albums=new HashMap<>();
      public static  ArrayList<ArrayList<Song>>al=new ArrayList<>();
 
 
 
     private NotificationManagerCompat notificationManager;
-    private MediaMetadataRetriever metadataRetriever;
+     MediaMetadataRetriever metadataRetriever;
     private MediaSessionCompat mediaSession;
 
-    private TabLayout tableLayout;
-    private ViewPager viewPager;
-    private ViewPagerAdapter viewPagerAdapter;
+     TabLayout tableLayout;
+     ViewPager viewPager;
+     protected ViewPagerAdapter viewPagerAdapter;
 
     public static Notification notification;
 
@@ -185,7 +186,6 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    byte arts[];
     public void sendOnChannel(String name,String artist,int position) {
 
         Intent activityIntent = new Intent(this, MainActivity.class);

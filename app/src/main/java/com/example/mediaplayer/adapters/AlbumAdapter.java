@@ -77,8 +77,8 @@ public class AlbumAdapter  extends RecyclerView.Adapter<AlbumAdapter.ViewHolder>
 
 
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-        TextView album,artist;
-        ImageView imageView;
+       private TextView album,artist;
+      private   ImageView imageView;
        private OnClickListen onClickListen;
         public ViewHolder(@NonNull View itemView,OnClickListen onClickListen) {
             super(itemView);

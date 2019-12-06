@@ -1,5 +1,4 @@
 package com.example.mediaplayer.notification;
-import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
@@ -10,7 +9,6 @@ import com.example.mediaplayer.activities.PlayerActivity;
 import com.example.mediaplayer.adapters.SongAdapter;
 
 public class NotiService extends Service {
-    public static final String CHANNEL_ID = "ForegroundServiceChannel";
 
     @Override
     public void onCreate() {

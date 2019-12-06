@@ -3,7 +3,6 @@ package com.example.mediaplayer.activities;
 import android.annotation.SuppressLint;
 import android.content.ContentUris;
 import android.content.Intent;
-import android.media.MediaMetadataRetriever;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Handler;
@@ -36,11 +35,11 @@ public class PlayerActivity extends AppCompatActivity {
     private TextView curTime,totTime,songTitle,artistname;
     private ImageView pause,prev,next;
     private ImageView imageView;
-    int val;
-    byte art[];
-     NofiticationCenter nofiticationCenter;
-      LinearLayout linearLayout;
-    static MediaPlayer mMediaPlayer;
+    protected int val;
+
+     protected NofiticationCenter nofiticationCenter;
+     protected LinearLayout linearLayout;
+    private static MediaPlayer mMediaPlayer;
 
 
 

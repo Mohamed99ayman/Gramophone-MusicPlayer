@@ -46,8 +46,7 @@ public class SongsFragment extends Fragment implements OnClickListen {
         return v;
     }
 
-    public SongsFragment() {
-    }
+
 
     @Override
     public void onClick(int position) {

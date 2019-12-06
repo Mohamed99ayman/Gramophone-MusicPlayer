@@ -6,7 +6,9 @@ public class Song implements Comparable<Song> {
 
 
     private String name ,album, artist,path,AlbumArt;
-    long albumID;
+    private long albumID;
+    private int im;
+    private Bitmap songImage;
     public Song(String name){
         this.name=name;
     }
@@ -27,8 +29,7 @@ public class Song implements Comparable<Song> {
         this.im = im;
     }
 
-    private int im;
-    Bitmap songImage;
+
 
     public String getPath() {
         return path;
@@ -76,9 +77,6 @@ public class Song implements Comparable<Song> {
 
     public void setArtist(String artist) {
         this.artist = artist;
-    }
-    public void setSongImage(){
-
     }
 
     public Song(){

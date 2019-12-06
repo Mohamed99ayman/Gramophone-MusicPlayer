@@ -6,7 +6,6 @@ import android.content.Intent;
 
 public class Channel extends BroadcastReceiver {
 
-
     @Override
     public void onReceive(Context context, Intent intent) {
 

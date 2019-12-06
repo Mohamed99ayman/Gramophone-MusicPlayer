@@ -26,9 +26,8 @@ import java.util.List;
 import interfaces.OnClickListen;
 
 public class SongAdapter extends RecyclerView.Adapter<SongAdapter.ViewHolder> implements Filterable {
-       static Typeface myfont;
-       private OnClickListen monclicklisten;
-        byte art[];
+       protected static Typeface myfont;
+       protected OnClickListen monclicklisten;
     private Activity context;
     public static ArrayList<Song>songs;
     private ArrayList<Song>allSongs;

@@ -19,7 +19,7 @@ import com.example.mediaplayer.adapters.AlbumAdapter;
 import interfaces.OnClickListen;
 
 public class AlbumsFragment extends Fragment implements OnClickListen {
-    View v;
+   private View v;
     private RecyclerView recyclerView;
 
     ///////////////HERE

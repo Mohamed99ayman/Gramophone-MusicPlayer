@@ -10,10 +10,10 @@ import java.util.List;
 
 
 public class DataReading {
-    public DataReading(Context context){
-        this.context=context;
-    }
-    Context context;
+
+    private Context context;
+    private HashMap<String, List<Song>>albums=new HashMap<>();
+
 
     public HashMap<String, List<Song>> getAlbums() {
         return albums;
@@ -22,8 +22,9 @@ public class DataReading {
     public void setAlbums(HashMap<String, List<Song>> albums) {
         this.albums = albums;
     }
-
-    HashMap<String, List<Song>>albums=new HashMap<>();
+    public DataReading(Context context){
+        this.context=context;
+    }
 
 
     public ArrayList<Song> getAllAudioFromDevice() {

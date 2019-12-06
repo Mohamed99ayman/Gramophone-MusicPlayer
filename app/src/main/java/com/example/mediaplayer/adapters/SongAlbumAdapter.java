@@ -23,7 +23,7 @@ public class SongAlbumAdapter extends RecyclerView.Adapter<SongAlbumAdapter.View
 
    private OnClickListen alclicklisten;
     public static ArrayList<Song> albumSong;
-    private static LayoutInflater inflater;
+    private static LayoutInflater inflater=null;
     public SongAlbumAdapter(ArrayList<Song>albumSong,OnClickListen alclicklisten){
         this.alclicklisten = alclicklisten;
         inflater=(LayoutInflater) MainActivity.getInstance().getSystemService(MainActivity.getInstance().LAYOUT_INFLATER_SERVICE);
