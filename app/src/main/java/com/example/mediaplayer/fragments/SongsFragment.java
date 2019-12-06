@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import com.example.mediaplayer.R;
 import com.example.mediaplayer.activities.MainActivity;
 import com.example.mediaplayer.activities.PlayerActivity;
 import com.example.mediaplayer.adapters.SongAdapter;
+
 
 import Interfaces.OnClickListen;
 
@@ -50,8 +52,14 @@ public class SongsFragment extends Fragment implements OnClickListen {
 
     @Override
     public void onClick(int position) {
-        Intent intent=new Intent(MainActivity.getInstance(), PlayerActivity.class).putExtra("index",position).putExtra("val",0);
-        startActivity(intent);
+        if(position>0) {
+            Intent intent = new Intent(MainActivity.getInstance(), PlayerActivity.class).putExtra("index", position).putExtra("val", 0);
+            startActivity(intent);
+        }
+        else{
+            Intent intent = new Intent(MainActivity.getInstance(), PlayerActivity.class).putExtra("index", position).putExtra("val", 2);
+            startActivity(intent);
+        }
     }
     public static void search(String text){
         songAdapter.getFilter().filter(text);

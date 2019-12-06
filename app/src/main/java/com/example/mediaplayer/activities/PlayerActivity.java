@@ -25,8 +25,7 @@ import com.example.mediaplayer.notification.NofiticationCenter;
 import com.example.mediaplayer.R;
 
 import java.util.ArrayList;
-
-import static com.example.mediaplayer.adapters.SongAdapter.songs;
+import java.util.Collections;
 
 
 public class PlayerActivity extends AppCompatActivity {
@@ -50,13 +49,7 @@ public class PlayerActivity extends AppCompatActivity {
     byte art[];
     private NofiticationCenter nofiticationCenter;
     private static PlayerActivity instance;
-   /* private Palette.Swatch vibrant;
-    private Palette.Swatch lightvibrant;
-    private Palette.Swatch darkvibrant;
-    private Palette.Swatch muted;
-    private Palette.Swatch lightmuted;
-    private Palette.Swatch darkmuted;
-    private int swatchnum;*/
+
     LinearLayout linearLayout;
 
 
@@ -91,11 +84,15 @@ public class PlayerActivity extends AppCompatActivity {
         val=bundle.getInt("val");
         if(val==1){
             Asongs= SongAlbumAdapter.albumSong;
-        }else{
+        }else if(val==2){
+            Asongs= SongAdapter.songs;
+            Collections.shuffle(Asongs);
+        }
+        else{
             Asongs= SongAdapter.songs;
         }
+        if(Asongs.get(position).getName()=="shufflee")position=(position+1)% Asongs.size();
         initPlayer(position);
-
 
 
         pause.setOnClickListener(new View.OnClickListener() {
@@ -133,6 +130,7 @@ public class PlayerActivity extends AppCompatActivity {
     }
 
      public void initPlayer(final int position) {
+
         playin=true;
         if (mMediaPlayer != null && mMediaPlayer.isPlaying()) {
             mMediaPlayer.reset();
@@ -163,23 +161,7 @@ public class PlayerActivity extends AppCompatActivity {
         MainActivity.getInstance().sendOnChannel(art,name,artist,position);
 
 
-        //backgoround color change
-      /*  Bitmap bitmap=((BitmapDrawable)imageView.getDrawable()).getBitmap();
-        Palette.from(bitmap).generate(new Palette.PaletteAsyncListener() {
-            @Override
-            public void onGenerated(@Nullable Palette palette) {
-                vibrant=palette.getVibrantSwatch();
-                darkvibrant=palette.getDarkVibrantSwatch();
-                lightvibrant=palette.getLightVibrantSwatch();
-                muted=palette.getLightMutedSwatch();
-                lightmuted=palette.getLightMutedSwatch();
-                darkmuted=palette.getDarkMutedSwatch();
 
-            }
-        });
-        linearLayout.setBackgroundColor(vibrant.getRgb());
-
-*/
         mMediaPlayer = MediaPlayer.create(getApplicationContext(), Uri.parse(Asongs.get(position).getPath())); // create and load mediaplayer with song resources
         mMediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override

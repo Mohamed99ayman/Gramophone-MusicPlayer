@@ -141,6 +141,8 @@ public class MainActivity extends AppCompatActivity {
     }
     private void Start(){
         dataReading=new DataReading(this);
+        songs=new ArrayList<>();
+        songs.add(new Song());
         ArrayList<Song> songs = dataReading.getAllAudioFromDevice();
         Collections.sort(songs);
         SongAdapter.songs=songs;

@@ -42,10 +42,12 @@ public class NotiService extends Service {
                     PlayerActivity.getInstance().play();
                 }
         } else if (actionString.equalsIgnoreCase("com.mypackage.ACTION_NEXT_MUSIC")) {
-                PlayerActivity.getInstance().initPlayer((pos+1)% SongAdapter.songs.size());
-                PlayerActivity.getInstance().setPosition(pos+1);
+                if(SongAdapter.songs.get((pos+1)% SongAdapter.songs.size()).getName()=="shufflee")pos++;
+                PlayerActivity.getInstance().initPlayer(((pos+1)% SongAdapter.songs.size()));
+                PlayerActivity.getInstance().setPosition(((pos+1)% SongAdapter.songs.size()));
         } else if (actionString.equalsIgnoreCase("com.mypackage.ACTION_PREV_MUSIC")) {
-                if(pos==0)pos=SongAdapter.songs.size()-1;
+                if(SongAdapter.songs.get((pos+1)% SongAdapter.songs.size()).getName()=="shufflee")pos--;
+                if(pos<=0)pos=SongAdapter.songs.size()-1;
                 else pos-=1;
                 PlayerActivity.getInstance().setPosition(pos);
                 PlayerActivity.getInstance().initPlayer((pos));

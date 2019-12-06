@@ -7,6 +7,9 @@ public class Song implements Comparable<Song> {
 
     private String name ,album, artist,path,AlbumArt;
     long albumID;
+    public Song(String name){
+        this.name=name;
+    }
 
     public long getAlbumID() {
         return albumID;
