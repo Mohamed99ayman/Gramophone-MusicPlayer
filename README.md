@@ -7,9 +7,9 @@ A simple MusicPlayer that allows the user to select songs from their library and
 - Quick search for a song or artist.
 - shuffle all your tracks.
 ## Libraries 
-* [Design Support Library](http://developer.android.com/intl/pt-br/tools/support-library/features.html#design)
-The Design package provides APIs to support adding material design components and patterns to your apps.
-* [RecyclerView](http://developer.android.com/intl/pt-br/reference/android/support/v7/widget/RecyclerView.html)
+* [Design Support Library](https://developer.android.com/topic/libraries/support-library/features#design)
+The Design package provides APIs to add material design components and patterns.
+* [RecyclerView](https://developer.android.com/reference/android/support/v7/widget/RecyclerView.html)
 A flexible view for providing a limited window into a large data set.
 * [Glide](https://github.com/bumptech/glide)
 An image loading and caching library for Android focused on smooth scrolling
