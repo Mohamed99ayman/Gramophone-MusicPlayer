@@ -19,7 +19,7 @@ An image loading and caching library for Android focused on smooth scrolling
 # State
 Developing
  
- ## Screen Shots ##
+ ## Screenshots ##
 ![screenshot1](https://github.com/Mohamed99ayman/Gramophone-MusicPlayer/blob/master/screenshots/s1.png)
 ![screenshot2](https://github.com/Mohamed99ayman/Gramophone-MusicPlayer/blob/master/screenshots/s2.png)
 ![screenshot3](https://github.com/Mohamed99ayman/Gramophone-MusicPlayer/blob/master/screenshots/s3.png)
