@@ -3,7 +3,6 @@ import android.app.Activity;
 import android.content.ContentUris;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.media.MediaMetadataRetriever;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -24,13 +23,17 @@ import com.example.mediaplayer.models.Song;
 import java.util.ArrayList;
 import java.util.List;
 
-import Interfaces.OnClickListen;
+import interfaces.OnClickListen;
 
 public class SongAdapter extends RecyclerView.Adapter<SongAdapter.ViewHolder> implements Filterable {
-    MediaMetadataRetriever metaRetriver;
        static Typeface myfont;
        private OnClickListen monclicklisten;
         byte art[];
+    private Activity context;
+    public static ArrayList<Song>songs;
+    private ArrayList<Song>allSongs;
+    private static LayoutInflater inflater;
+
 
     @NonNull
     @Override
@@ -45,8 +48,7 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.ViewHolder> im
         if(i==0){
             viewHolder.textview1.setText("Shuffle All");
             viewHolder.textView2.setText("");
-           // viewHolder.textview1.setX(viewHolder.textview1.getX()+25);
-            //viewHolder.textview1.setY(viewHolder.textview1.getY()+40);
+
             viewHolder.textview1.setTextSize(25);
             viewHolder.textview1.setTextColor(Color.parseColor("#FF1105"));
             Glide
@@ -118,11 +120,6 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.ViewHolder> im
     }
 
 
-
-    Activity context;
-   public static ArrayList<Song>songs;
-    ArrayList<Song>allSongs;
-    private static LayoutInflater inflater=null;
 
     public Song getSong(int position){
         return allSongs.get(position);

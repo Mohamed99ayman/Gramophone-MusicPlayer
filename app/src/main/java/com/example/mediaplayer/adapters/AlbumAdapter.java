@@ -20,16 +20,15 @@ import com.example.mediaplayer.R;
 import com.example.mediaplayer.models.Song;
 import com.example.mediaplayer.activities.MainActivity;
 
-import java.util.ArrayList;
 
-import Interfaces.OnClickListen;
+import interfaces.OnClickListen;
 
 public class AlbumAdapter  extends RecyclerView.Adapter<AlbumAdapter.ViewHolder> implements Filterable {
     private OnClickListen alclicklisten;
+//for search
+    //ArrayList<ArrayList<Song>>filtered=new ArrayList<>();
 
-    ArrayList<ArrayList<Song>>filtered=new ArrayList<>();
-
-    private static LayoutInflater inflater=null;
+    private  LayoutInflater inflater;
 
     public AlbumAdapter(OnClickListen alclicklisten) {
         this.alclicklisten = alclicklisten;
@@ -80,7 +79,7 @@ public class AlbumAdapter  extends RecyclerView.Adapter<AlbumAdapter.ViewHolder>
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         TextView album,artist;
         ImageView imageView;
-        OnClickListen onClickListen;
+       private OnClickListen onClickListen;
         public ViewHolder(@NonNull View itemView,OnClickListen onClickListen) {
             super(itemView);
             album=itemView.findViewById(R.id.album_name);

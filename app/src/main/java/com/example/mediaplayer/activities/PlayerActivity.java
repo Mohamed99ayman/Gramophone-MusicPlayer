@@ -1,7 +1,6 @@
 package com.example.mediaplayer.activities;
 
 import android.annotation.SuppressLint;
-import android.app.Notification;
 import android.content.ContentUris;
 import android.content.Intent;
 import android.media.MediaMetadataRetriever;
@@ -30,7 +29,17 @@ import java.util.Collections;
 
 public class PlayerActivity extends AppCompatActivity {
     public static boolean playin;
-    SeekBar mSeekBar;
+    private ArrayList<Song>Asongs;
+    private SeekBar mSeekBar;
+    private static PlayerActivity instance;
+    int position;
+    private TextView curTime,totTime,songTitle,artistname;
+    private ImageView pause,prev,next;
+    private ImageView imageView;
+    int val;
+    byte art[];
+     NofiticationCenter nofiticationCenter;
+      LinearLayout linearLayout;
     static MediaPlayer mMediaPlayer;
 
 
@@ -39,18 +48,7 @@ public class PlayerActivity extends AppCompatActivity {
         return position;
     }
 
-    int position;
-    TextView curTime,totTime,songTitle,artistname;
-    ImageView pause,prev,next;
-    ImageView imageView;
-    int val;
-    ArrayList<Song>Asongs;
-    MediaMetadataRetriever metadataRetriever;
-    byte art[];
-    private NofiticationCenter nofiticationCenter;
-    private static PlayerActivity instance;
 
-    LinearLayout linearLayout;
 
 
 
@@ -158,7 +156,7 @@ public class PlayerActivity extends AppCompatActivity {
 
             Glide.with(this).load(R.drawable.track).into(imageView);
         }
-        MainActivity.getInstance().sendOnChannel(art,name,artist,position);
+        MainActivity.getInstance().sendOnChannel(name,artist,position);
 
 
 
@@ -195,10 +193,12 @@ public class PlayerActivity extends AppCompatActivity {
                 }
 
             }
+
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
 
             }
+
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
 
@@ -239,7 +239,7 @@ public class PlayerActivity extends AppCompatActivity {
             playin=true;
             mMediaPlayer.start();
             pause.setBackgroundResource(R.drawable.pause_24dp);
-            MainActivity.getInstance().sendOnChannel(art, Asongs.get(position).getName(), Asongs.get(position).getArtist(),position);
+            MainActivity.getInstance().sendOnChannel( Asongs.get(position).getName(), Asongs.get(position).getArtist(),position);
         } else {
             pause();
         }
@@ -251,8 +251,7 @@ public class PlayerActivity extends AppCompatActivity {
             playin=false;
             mMediaPlayer.pause();
             pause.setBackgroundResource(R.drawable.play_arrow_24dp);
-            MainActivity.getInstance().sendOnChannel(art, Asongs.get(position).getName(), Asongs.get(position).getArtist(),position);
-
+            MainActivity.getInstance().sendOnChannel( Asongs.get(position).getName(), Asongs.get(position).getArtist(),position);
 
         }
 

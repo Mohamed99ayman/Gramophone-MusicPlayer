@@ -16,7 +16,7 @@ import com.example.mediaplayer.activities.AlbumActivity;
 import com.example.mediaplayer.activities.MainActivity;
 import com.example.mediaplayer.adapters.AlbumAdapter;
 
-import Interfaces.OnClickListen;
+import interfaces.OnClickListen;
 
 public class AlbumsFragment extends Fragment implements OnClickListen {
     View v;
@@ -31,9 +31,6 @@ public class AlbumsFragment extends Fragment implements OnClickListen {
         super.onCreate(savedInstanceState);
     }
 
-    public AlbumsFragment() {
-
-    }
 
 
 

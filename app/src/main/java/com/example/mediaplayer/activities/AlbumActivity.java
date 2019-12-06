@@ -1,7 +1,6 @@
 package com.example.mediaplayer.activities;
 
 import android.content.ContentUris;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -12,20 +11,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.AttributeSet;
-import android.view.View;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.mediaplayer.R;
-import com.example.mediaplayer.adapters.SongAdapter;
 import com.example.mediaplayer.adapters.SongAlbumAdapter;
 
-import Interfaces.OnClickListen;
+import interfaces.OnClickListen;
 
 import static com.example.mediaplayer.activities.MainActivity.al;
-import static com.example.mediaplayer.adapters.SongAdapter.songs;
 
 public class AlbumActivity extends AppCompatActivity implements OnClickListen {
 

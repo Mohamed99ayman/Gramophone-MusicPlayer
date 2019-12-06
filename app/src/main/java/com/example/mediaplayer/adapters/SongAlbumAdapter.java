@@ -15,15 +15,15 @@ import com.example.mediaplayer.models.Song;
 
 import java.util.ArrayList;
 
-import Interfaces.OnClickListen;
+import interfaces.OnClickListen;
 
 import static com.example.mediaplayer.adapters.SongAdapter.myfont;
 
 public class SongAlbumAdapter extends RecyclerView.Adapter<SongAlbumAdapter.ViewHolder> implements Filterable {
 
-    OnClickListen alclicklisten;
+   private OnClickListen alclicklisten;
     public static ArrayList<Song> albumSong;
-    private static LayoutInflater inflater=null;
+    private static LayoutInflater inflater;
     public SongAlbumAdapter(ArrayList<Song>albumSong,OnClickListen alclicklisten){
         this.alclicklisten = alclicklisten;
         inflater=(LayoutInflater) MainActivity.getInstance().getSystemService(MainActivity.getInstance().LAYOUT_INFLATER_SERVICE);

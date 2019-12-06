@@ -21,8 +21,7 @@ public class NotiService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         String input = intent.getStringExtra("inputExtra");
         Intent notificationIntent = new Intent(this, MainActivity.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this,
-                0, notificationIntent, 0);
+
 
         handleIncomingActions(intent);
 
@@ -42,11 +41,11 @@ public class NotiService extends Service {
                     PlayerActivity.getInstance().play();
                 }
         } else if (actionString.equalsIgnoreCase("com.mypackage.ACTION_NEXT_MUSIC")) {
-                if(SongAdapter.songs.get((pos+1)% SongAdapter.songs.size()).getName()=="shufflee")pos++;
+                if(SongAdapter.songs.get((pos+1)% SongAdapter.songs.size()).getName().equals("shufflee"))pos++;
                 PlayerActivity.getInstance().initPlayer(((pos+1)% SongAdapter.songs.size()));
                 PlayerActivity.getInstance().setPosition(((pos+1)% SongAdapter.songs.size()));
         } else if (actionString.equalsIgnoreCase("com.mypackage.ACTION_PREV_MUSIC")) {
-                if(SongAdapter.songs.get((pos+1)% SongAdapter.songs.size()).getName()=="shufflee")pos--;
+                if(SongAdapter.songs.get((pos+1)% SongAdapter.songs.size()).getName().equals("shufflee"))pos--;
                 if(pos<=0)pos=SongAdapter.songs.size()-1;
                 else pos-=1;
                 PlayerActivity.getInstance().setPosition(pos);

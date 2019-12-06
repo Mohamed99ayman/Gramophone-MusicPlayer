@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private NotificationManagerCompat notificationManager;
-    MediaMetadataRetriever metadataRetriever;
+    private MediaMetadataRetriever metadataRetriever;
     private MediaSessionCompat mediaSession;
 
     private TabLayout tableLayout;
@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
         if(ContextCompat.checkSelfPermission(MainActivity.this,Manifest.permission.READ_EXTERNAL_STORAGE)==PackageManager.PERMISSION_DENIED){
             requestStoragePermission();
         }else {
-         Start();
+         start();
 
         }
     }
@@ -132,14 +132,14 @@ public class MainActivity extends AppCompatActivity {
         if(requestCode==Storage_Permission_code){
             if(grantResults.length>0&&grantResults[0]==PackageManager.PERMISSION_GRANTED){
             Toast.makeText(this,"Permission Granted",Toast.LENGTH_SHORT).show();
-            Start();
+            start();
             }else{
                 Toast.makeText(this,"Permission Denied",Toast.LENGTH_SHORT).show();
 
             }
         }
     }
-    private void Start(){
+    private void start(){
         dataReading=new DataReading(this);
         songs=new ArrayList<>();
         songs.add(new Song());
@@ -185,8 +185,8 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-
-    public void sendOnChannel(byte art[],String name,String artist,int position) {
+    byte arts[];
+    public void sendOnChannel(String name,String artist,int position) {
 
         Intent activityIntent = new Intent(this, MainActivity.class);
         PendingIntent contentIntent = PendingIntent.getActivity(this,
@@ -200,10 +200,10 @@ public class MainActivity extends AppCompatActivity {
         }
         metadataRetriever = new MediaMetadataRetriever();
         metadataRetriever.setDataSource(songs.get(position).getPath());
-        art= metadataRetriever.getEmbeddedPicture();
+        arts= metadataRetriever.getEmbeddedPicture();
         Bitmap artwork;
         try {
-            artwork=BitmapFactory.decodeByteArray(art,0,art.length);
+            artwork=BitmapFactory.decodeByteArray(arts,0,arts.length);
         }catch (Exception e){
             artwork = BitmapFactory.decodeResource(getResources(), R.drawable.track_2);
         }
