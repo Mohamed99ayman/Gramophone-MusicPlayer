@@ -19,12 +19,12 @@ import com.example.mediaplayer.adapters.AlbumAdapter;
 import interfaces.OnClickListen;
 
 public class AlbumsFragment extends Fragment implements OnClickListen {
-   private View v;
-    private RecyclerView recyclerView;
+    protected View v;
+     protected RecyclerView recyclerView;
 
     ///////////////HERE
-    private RecyclerView.LayoutManager mmanager;
-    private static AlbumAdapter albumAdapter;
+     protected RecyclerView.LayoutManager mmanager;
+    protected static AlbumAdapter albumAdapter;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
