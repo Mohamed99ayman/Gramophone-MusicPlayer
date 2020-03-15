@@ -13,6 +13,7 @@ public class DataReading {
 
     private Context context;
     private HashMap<String, List<Song>>albums=new HashMap<>();
+    private HashMap<String,List<Song>>Artists=new HashMap<>();
 
 
     public HashMap<String, List<Song>> getAlbums() {
@@ -52,6 +53,10 @@ public class DataReading {
                     albums.put(album,new ArrayList<Song>());
                 }
                 albums.get(album).add(audioModel);
+                if(Artists.get(artist)==null){
+                    Artists.put(artist,new ArrayList<Song>());
+                }
+                Artists.get(artist).add(audioModel);
             }
             c.close();
         }

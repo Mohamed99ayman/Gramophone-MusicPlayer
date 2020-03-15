@@ -23,7 +23,11 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.support.v7.widget.SearchView;
 import java.util.ArrayList;
@@ -66,7 +70,9 @@ public class MainActivity extends AppCompatActivity {
      TabLayout tableLayout;
      ViewPager viewPager;
      protected ViewPagerAdapter viewPagerAdapter;
-
+    LinearLayout miniplayer;
+    TextView textView;
+    public static   ImageView imageView;
     public static Notification notification;
 
     @Override
@@ -74,9 +80,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
 
-
         setContentView(R.layout.activity_main);
-
+        textView=findViewById(R.id.mini_player_title);
         tableLayout=findViewById(R.id.table_Layout);
         viewPager=findViewById(R.id.view_Pager);
         viewPagerAdapter=new ViewPagerAdapter(getSupportFragmentManager());
@@ -89,7 +94,10 @@ public class MainActivity extends AppCompatActivity {
         tableLayout.setupWithViewPager(viewPager);
         ActionBar actionBar=getSupportActionBar();
         actionBar.setElevation(0);
-
+        imageView=findViewById(R.id.mini_player_play_pause_button);
+        miniplayer=findViewById(R.id.mini_player);
+        imageView.setBackgroundResource(R.drawable.play_arrow_24dp);
+       intializeMini();
         notificationManager = NotificationManagerCompat.from(this);
 
         mediaSession = new MediaSessionCompat(this, "tag");
@@ -103,6 +111,30 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public void intializeMini(){
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PlayerActivity.getInstance().play();
+                if(PlayerActivity.playin==true){
+                    imageView.setBackgroundResource(R.drawable.pause_24dp);
+                }else{
+                    imageView.setBackgroundResource(R.drawable.play_arrow_24dp);
+
+                }
+            }
+        });
+
+        miniplayer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.getInstance(), PlayerActivity.class).putExtra("index", 0).putExtra("val", 0).putExtra("from",false);
+                startActivity(intent);
+            }
+        });
+
+
+    }
     public static MainActivity getInstance() {
         return instance;
     }
@@ -148,6 +180,7 @@ public class MainActivity extends AppCompatActivity {
         Collections.sort(songs);
         SongAdapter.songs=songs;
         albums=dataReading.getAlbums();
+        textView.setText(songs.get(0).getName());
         shift();
 
 
@@ -226,6 +259,7 @@ public class MainActivity extends AppCompatActivity {
 
         notificationManager.notify(1, notification);
     }
+
 
     private PendingIntent playbackAction(int actionNumber) {
         Intent playbackAction = new Intent(this, NotiService.class);

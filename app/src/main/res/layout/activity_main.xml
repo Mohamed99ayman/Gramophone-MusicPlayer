@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -6,23 +7,80 @@
     android:layout_height="match_parent"
     tools:context=".activities.MainActivity"
     android:background="@color/colorPrimaryDark"
-    android:orientation="vertical">
-   <android.support.design.widget.TabLayout
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content"
-       android:background="@color/colorPrimary"
-       app:tabMode="fixed"
-       app:tabGravity="fill"
-         app:tabIndicator="@color/design_default_color_primary"
-       app:tabTextColor="#FFF"
-       android:id="@+id/table_Layout"
-       app:tabSelectedTextColor="@color/design_default_color_primary"
-       >
+    android:orientation="vertical"
+    android:weightSum="100"
+    >
 
-   </android.support.design.widget.TabLayout>
-   <android.support.v4.view.ViewPager
-       android:layout_width="match_parent"
-       android:layout_height="match_parent"
-       android:id="@+id/view_Pager"></android.support.v4.view.ViewPager>
+    <android.support.design.widget.TabLayout
+        android:id="@+id/table_Layout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="10"
+        android:background="@color/colorPrimary"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tabGravity="fill"
+        app:tabIndicator="@color/design_default_color_primary"
+        app:tabMode="fixed"
+        app:tabSelectedTextColor="@color/design_default_color_primary"
+        app:tabTextColor="#FFF"></android.support.design.widget.TabLayout>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/view_Pager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        android:layout_weight="80" />
+
+    <LinearLayout
+        android:id="@+id/mini_player"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="10"
+        android:orientation="horizontal"
+
+
+        >
+
+        <ImageView
+            android:id="@+id/mini_player_image"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_gravity="center_vertical"
+            android:layout_margin="16dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_keyboard_arrow_up_black_24dp"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/mini_player_title"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:singleLine="true"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+            android:textColor="@color/colorAccent"
+            android:textSize="20sp" />
+
+        <ImageView
+            android:id="@+id/mini_player_play_pause_button"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:scaleType="center"
+            tools:ignore="ContentDescription" />
+
+    </LinearLayout>
+
+
+
 
 </LinearLayout>

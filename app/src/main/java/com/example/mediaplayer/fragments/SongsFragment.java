@@ -28,7 +28,6 @@ public class SongsFragment extends Fragment implements OnClickListen {
     private RecyclerView.LayoutManager mmanager;
     private static SongAdapter songAdapter;
 
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,15 +46,14 @@ public class SongsFragment extends Fragment implements OnClickListen {
     }
 
 
-
     @Override
     public void onClick(int position) {
         if(position>0) {
-            Intent intent = new Intent(MainActivity.getInstance(), PlayerActivity.class).putExtra("index", position).putExtra("val", 0);
+            Intent intent = new Intent(MainActivity.getInstance(), PlayerActivity.class).putExtra("index", position).putExtra("val", 0).putExtra("from",true);
             startActivity(intent);
         }
         else{
-            Intent intent = new Intent(MainActivity.getInstance(), PlayerActivity.class).putExtra("index", position).putExtra("val", 2);
+            Intent intent = new Intent(MainActivity.getInstance(), PlayerActivity.class).putExtra("index", position).putExtra("val", 2).putExtra("from",true);
             startActivity(intent);
         }
     }
