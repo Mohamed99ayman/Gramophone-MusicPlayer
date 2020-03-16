@@ -20,9 +20,9 @@ An image loading and caching library for Android focused on smooth scrolling
 Developing
  
  ## Screenshots ##
-![picture alt](https://github.com/Mohamed99ayman/Gramophone-MusicPlayer/blob/master/screenshots/s1.png)
-![picture alt](https://github.com/Mohamed99ayman/Gramophone-MusicPlayer/blob/master/screenshots/s2.png)
-![picture alt](https://github.com/Mohamed99ayman/Gramophone-MusicPlayer/blob/master/screenshots/s3.png)
-![picture alt](https://github.com/Mohamed99ayman/Gramophone-MusicPlayer/blob/master/screenshots/s4.png)
-![picture alt](https://github.com/Mohamed99ayman/Gramophone-MusicPlayer/blob/master/screenshots/s5.png)
-![picture alt](https://github.com/Mohamed99ayman/Gramophone-MusicPlayer/blob/master/screenshots/s6.png)
+![picture alt](https://github.com/Mohamed99ayman/Gramophone-MusicPlayer/blob/master/screenshots/s1.jpg)
+![picture alt](https://github.com/Mohamed99ayman/Gramophone-MusicPlayer/blob/master/screenshots/s2.jpg)
+![picture alt](https://github.com/Mohamed99ayman/Gramophone-MusicPlayer/blob/master/screenshots/s3.jpg)
+![picture alt](https://github.com/Mohamed99ayman/Gramophone-MusicPlayer/blob/master/screenshots/s4.jpg)
+![picture alt](https://github.com/Mohamed99ayman/Gramophone-MusicPlayer/blob/master/screenshots/s5.jpg)
+![picture alt](https://github.com/Mohamed99ayman/Gramophone-MusicPlayer/blob/master/screenshots/s6.jpg)
