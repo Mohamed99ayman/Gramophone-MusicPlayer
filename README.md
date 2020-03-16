@@ -15,6 +15,8 @@ The Design package provides APIs to add material design components and patterns.
 A flexible view for providing a limited window into a large data set.
 * [Glide](https://github.com/bumptech/glide)
 An image loading and caching library for Android focused on smooth scrolling
+* [Palette](https://developer.android.com/reference/android/support/v7/graphics/Palette)
+A helper class to extract prominent colors from an image.
 
 # State
 Developing
