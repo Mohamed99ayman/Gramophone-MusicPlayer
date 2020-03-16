@@ -27,6 +27,7 @@
                android:layout_height="match_parent"
                android:orientation="horizontal"
                android:weightSum="100"
+               android:background="#000"
                android:id="@+id/linear"
                >
            <ImageView

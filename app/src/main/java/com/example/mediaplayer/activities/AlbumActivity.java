@@ -15,7 +15,6 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -96,9 +95,6 @@ public class AlbumActivity extends AppCompatActivity implements OnClickListen {
 
         recyclerView.setLayoutManager(mmanager);
         recyclerView.setAdapter(songalbumAdapter);
-
-
-
 
 
     }

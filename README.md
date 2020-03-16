@@ -24,3 +24,5 @@ Developing
 ![picture alt](https://github.com/Mohamed99ayman/Gramophone-MusicPlayer/blob/master/screenshots/s2.png)
 ![picture alt](https://github.com/Mohamed99ayman/Gramophone-MusicPlayer/blob/master/screenshots/s3.png)
 ![picture alt](https://github.com/Mohamed99ayman/Gramophone-MusicPlayer/blob/master/screenshots/s4.png)
+![picture alt](https://github.com/Mohamed99ayman/Gramophone-MusicPlayer/blob/master/screenshots/s5.png)
+![picture alt](https://github.com/Mohamed99ayman/Gramophone-MusicPlayer/blob/master/screenshots/s6.png)
